@@ -153,9 +153,9 @@ namespace Funcoes
 
             return opcao;
         }
-        public string verificaArquivo()
+        public string GetNomeArquivo()
         {
-            string arquivo = null;
+            string? arquivo = null;
             if (Directory.Exists(@"c:\temp"))
             {
                 if (File.Exists(@"c:\temp\cadastro_pessoa.txt"))
