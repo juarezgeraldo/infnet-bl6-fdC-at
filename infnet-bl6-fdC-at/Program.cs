@@ -12,9 +12,13 @@ namespace AplicacaoPrincipal
             int opcao = 0;
             Funcoes.Funcoes funcao = new();
 
-            string? arquivo = funcao.GetNomeArquivo();
+            string? arquivo = Funcoes.Funcoes.GetNomeArquivo();
             if (arquivo != null)
             {
+                funcao.CarregaPoessoaList(arquivo);
+                funcao.PesquisaAniversarioHoje();
+                Console.Clear();
+
                 while (opcao != 9)
                 {
                     Console.WriteLine("Gerenciador de aniversários");
@@ -25,7 +29,6 @@ namespace AplicacaoPrincipal
                     Console.WriteLine("2 - Alterar pessoa");
                     Console.WriteLine("3 - Excluir pessoa");
                     Console.WriteLine("4 - Pesquisar pessoas");
-                    Console.WriteLine("5 - Pesquisar aniversário");
                     Console.WriteLine();
                     Console.WriteLine("9 - Sair");
 
@@ -39,10 +42,16 @@ namespace AplicacaoPrincipal
                     switch (opcao)
                     {
                         case 1:
-                            funcao.cadastraPessoa();
+                            funcao.CadastraPessoa(arquivo);
+                            break;
+                        case 2:
+                            funcao.AlteraPessoa(arquivo);
+                            break;
+                        case 3:
+                            funcao.ExcluiPessoa(arquivo);
                             break;
                         case 4:
-                            funcao.pesquisaPessoa();
+                            funcao.PesquisaPessoa();
                             break;
                         default:
                             break;

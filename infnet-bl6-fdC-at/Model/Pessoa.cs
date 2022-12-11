@@ -6,54 +6,54 @@ namespace PessoaAniversario
     public class Pessoa
     {
         #region atributos
-        private int? _pessoaId;
-        private string? _nome;
-        private string? _sobrenome;
-        private DateOnly _dataNascimento;
+        private int _pessoaId;
+        private string _nome;
+        private string _sobrenome;
+        private DateTime _dataNascimento;
         #endregion
 
         #region propriedades
-        public int pessoaId
+        public int PessoaId
         {
-            get { return _pessoaId.Value; }
+            get { return _pessoaId; }
             set { _pessoaId = value; }
         }
-        public string nome
+        public string Nome
         {
             get { return _nome; }
             set { _nome = value; }
         }
 
-        public string sobrenome
+        public string Sobrenome
         {
             get { return _sobrenome; }
             set { _sobrenome = value; }
         }
 
-        public DateOnly dataNascimento
+        public DateTime DataNascimento
         {
             get { return _dataNascimento; }
             set
             {
                 string data = value.ToString();
-                if (!DateOnly.TryParse(data, out DateOnly dataOk))
+                if (!DateTime.TryParse(data, out DateTime dataOk))
                 {
                     throw new Exception("Data inválida.");
                 }
                 _dataNascimento = dataOk;
             }
         }
-        public string nomeCompleto
+        public string NomeCompleto
         {
             get { return _nome + " " + _sobrenome; }
         }
 
-        public List<Pessoa> pessoas = new List<Pessoa>();
+        public List<Pessoa> pessoas = new();
         #endregion
 
         #region métodos
         public Pessoa() { }
-        public Pessoa(int pessoaId, string nome, string sobrenome, DateOnly dataNascimento)
+        public Pessoa(int pessoaId, string nome, string sobrenome, DateTime dataNascimento)
         {
             this._pessoaId = pessoaId;
             this._nome = nome;
@@ -61,7 +61,7 @@ namespace PessoaAniversario
             this._dataNascimento = dataNascimento;
         }
 
-        public DateOnly proximoAniversario()
+        public DateTime ProximoAniversario()
         {
 
             DateTime dataProximoAniversario = new DateTime(DateTime.Now.Year, _dataNascimento.Month, _dataNascimento.Day, 0, 0, 0);
@@ -69,21 +69,21 @@ namespace PessoaAniversario
             {
                 dataProximoAniversario = dataProximoAniversario.AddYears(1);
             }
-            return DateOnly.FromDateTime(dataProximoAniversario);
+            return dataProximoAniversario;
         }
-        public int calculaDiasFaltantes()
+        public int CalculaDiasFaltantes()
         {
-            DateTime dataAtual = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
-            DateOnly dataAniversario = proximoAniversario();
-            DateTime dataProximoAniversario = dataAniversario.ToDateTime(TimeOnly.Parse("00:00"));
+            DateTime dataAtual = new(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+            DateTime dataAniversario = ProximoAniversario();
+//            DateTime dataProximoAniversario = dataAniversario.ToDateTime(TimeOnly.Parse("00:00"));
 
             if (dataAtual.Month == dataAniversario.Month &&
                 dataAtual.Day == dataAniversario.Day)
             {
                 return 0;
             }
-            int difDatas = (int)dataAtual.Subtract(dataProximoAniversario).TotalDays;
-            if (difDatas < 0) { difDatas = difDatas * -1; }
+            int difDatas = (int)dataAtual.Subtract(dataAniversario).TotalDays;
+            if (difDatas < 0) { difDatas *= -1; }
 
             return difDatas;
         }
