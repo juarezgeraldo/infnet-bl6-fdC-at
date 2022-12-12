@@ -38,7 +38,7 @@ namespace Funcoes
 
             Console.WriteLine("Confirma inclusão?");
             Console.WriteLine("Nome           : " + nome + " " + sobreNome);
-            Console.WriteLine("Data nascimento: {0:d}", dataNascimento);
+            Console.WriteLine("Data nascimento: {0:dd/MM/yyyy}", dataNascimento);
             Console.WriteLine("1 - Sim");
             Console.WriteLine("2 - Não");
 
@@ -66,11 +66,11 @@ namespace Funcoes
             Console.WriteLine("Digite o nome/sobrenome ou parte do nome/sobrenome da pessoa:");
             string nomePesq = RecebeStringTela().Trim();
 
-            List<int> pessoaIds = repositorio.PesquisaPessoas(nomePesq);
+            Dictionary<int, int> indices = repositorio.PesquisaPessoas(nomePesq);
 
-            if (pessoaIds.Count > 0)
+            if (indices.Count > 0)
             {
-                Pessoa pessoa = pessoaList[RecebeOpcaoIds(pessoaIds)];
+                Pessoa pessoa = pessoaList[RecebeOpcaoIds(indices)];
 
                 Console.Clear();
                 Console.WriteLine("Gerenciador de aniversários");
@@ -81,9 +81,9 @@ namespace Funcoes
                 Console.WriteLine();
                 Console.WriteLine("Dados da pessoa selecionada:");
                 Console.WriteLine("Nome completo      : " + pessoa.NomeCompleto);
-                Console.WriteLine("Data nascimento    : " + pessoa.DataNascimento);
+                Console.WriteLine("Data nascimento    : {0:dd/MM/yyyy}", pessoa.DataNascimento);
                 Console.WriteLine();
-                Console.WriteLine("Próximo aniversário: " + pessoa.ProximoAniversario());
+                Console.WriteLine("Próximo aniversário: {0:dd/MM/yyyy}", pessoa.ProximoAniversario());
                 Console.WriteLine();
                 int diasFaltantes = pessoa.CalculaDiasFaltantes();
                 Console.WriteLine(diasFaltantes == 0 ? "É HOJE!!!!!" : "Faltam " + diasFaltantes + " dias para o próximo aniversário:");
@@ -106,12 +106,13 @@ namespace Funcoes
             Console.WriteLine("Digite o nome/sobrenome ou parte do nome/sobrenome da pessoa:");
             string nomePesq = RecebeStringTela().Trim();
 
-            List<int> pessoaIds = repositorio.PesquisaPessoas(nomePesq);
+            Dictionary<int, int> indices = repositorio.PesquisaPessoas(nomePesq);
 
-            if (pessoaIds.Count > 0)
+            if (indices.Count > 0)
             {
-                Pessoa pessoa = pessoaList[RecebeOpcaoIds(pessoaIds)];
-                int indicePessoa = pessoaList.IndexOf(pessoa);
+                int indicePessoa = RecebeOpcaoIds(indices);
+                Pessoa pessoa = pessoaList[indicePessoa];
+
 
                 Console.Clear();
                 Console.WriteLine("Gerenciador de aniversários");
@@ -122,7 +123,7 @@ namespace Funcoes
                 Console.WriteLine();
                 Console.WriteLine("Dados da pessoa selecionada:");
                 Console.WriteLine("Nome completo      : " + pessoa.NomeCompleto);
-                Console.WriteLine("Data nascimento    : " + pessoa.DataNascimento);
+                Console.WriteLine("Data nascimento    : {0:dd/MM/yyyy}", pessoa.DataNascimento);
                 Console.WriteLine();
 
                 Console.WriteLine("Digite o novo nome da pessoa:");
@@ -167,11 +168,11 @@ namespace Funcoes
             Console.WriteLine("Digite o nome/sobrenome ou parte do nome/sobrenome da pessoa:");
             string nomePesq = RecebeStringTela().Trim();
 
-            List<int> pessoaIds = repositorio.PesquisaPessoas(nomePesq);
+            Dictionary<int, int> indices = repositorio.PesquisaPessoas(nomePesq);
 
-            if (pessoaIds.Count > 0)
+            if (indices.Count > 0)
             {
-                Pessoa pessoa = pessoaList[RecebeOpcaoIds(pessoaIds)];
+                Pessoa pessoa = pessoaList[RecebeOpcaoIds(indices)];
 
                 Console.Clear();
                 Console.WriteLine("Gerenciador de aniversários");
@@ -182,7 +183,7 @@ namespace Funcoes
                 Console.WriteLine();
                 Console.WriteLine("Dados da pessoa selecionada:");
                 Console.WriteLine("Nome completo      : " + pessoa.NomeCompleto);
-                Console.WriteLine("Data nascimento    : " + pessoa.DataNascimento);
+                Console.WriteLine("Data nascimento    : {0:dd/MM/yyyy}", pessoa.DataNascimento);
                 Console.WriteLine();
 
                 Console.WriteLine("Confirma exclusão?");
@@ -201,7 +202,7 @@ namespace Funcoes
         private static string RecebeStringTela()
         {
             string? recebeValor = Console.ReadLine();
-            while (recebeValor!= null &&
+            while (recebeValor != null &&
                     (recebeValor.Length == 0 ||
                     recebeValor.Trim() == ""))
             {
@@ -234,16 +235,17 @@ namespace Funcoes
 
             return opcao;
         }
-        private static int RecebeOpcaoIds(List<int> listaIds)
+        // Dictionary 1-indice gravado 2-indice da lista
+        private static int RecebeOpcaoIds(Dictionary<int, int> indices)
         {
             Boolean opcaoValida = (int.TryParse(Console.ReadLine(), out int opcao));
-            while (!opcaoValida || listaIds.IndexOf(opcao) < 0)
+            while (!opcaoValida || !indices.ContainsKey(opcao))
             {
                 Console.WriteLine("Opcao inválida. Informe a opção correta...");
                 opcaoValida = (int.TryParse(Console.ReadLine(), out opcao));
             };
 
-            return opcao;
+            return indices[opcao];
         }
         public static string? GetNomeArquivo()
         {

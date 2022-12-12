@@ -73,10 +73,12 @@ namespace _Repositorio
                 }
             }
         }
-        public List<int> PesquisaPessoas(string nomePesq)
+        public Dictionary<int, int> PesquisaPessoas(string nomePesq)
         {
             Boolean achouPessoa = false;
-            List<int> pessoaIds = new();
+            // Dictionary 1-indice gravado 2-indice da lista
+            Dictionary<int, int> indices = new();
+            int indice = 0;
 
             foreach (Pessoa p in _listaPessoa)
             {
@@ -89,10 +91,11 @@ namespace _Repositorio
                         achouPessoa = true;
                     }
                     Repositorio.ImprimirPessoa(p);
-                    pessoaIds.Add(p.PessoaId);
+                    indices.Add(p.PessoaId, indice);
                 }
+                indice++;
             }
-            return pessoaIds;
+            return indices;
         }
         public List<Pessoa> PesquisaAniversarioHoje()
         {
