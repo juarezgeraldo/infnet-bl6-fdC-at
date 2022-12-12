@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _IRepositorio
 {
-    internal interface IRepositorio
+    public interface IRepositorio
     {
         public List<Pessoa> CarregaPessoasLista(string arquivo);
         public void AdicionarPessoa(Pessoa pessoa, string arquivo);

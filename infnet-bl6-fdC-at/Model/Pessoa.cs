@@ -65,7 +65,7 @@ namespace PessoaAniversario
         {
 
             DateTime dataProximoAniversario = new DateTime(DateTime.Now.Year, _dataNascimento.Month, _dataNascimento.Day, 0, 0, 0);
-            if (DateTime.Compare(dataProximoAniversario, DateTime.Now) < 0)
+            if (DateTime.Compare(dataProximoAniversario, DateTime.Today) < 0)
             {
                 dataProximoAniversario = dataProximoAniversario.AddYears(1);
             }
