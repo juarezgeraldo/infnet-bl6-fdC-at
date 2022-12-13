@@ -247,7 +247,7 @@ namespace Funcoes
 
             return indices[opcao];
         }
-        public static string? GetNomeArquivo()
+        public string? GetNomeArquivo()
         {
             string? arquivo = null;
             if (Directory.Exists(@"c:\temp"))
@@ -292,7 +292,7 @@ namespace Funcoes
             List<Pessoa> listaPessoas = repositorio.PesquisaAniversarioHoje();
             if (listaPessoas != null && listaPessoas.Count > 0)
             {
-                Console.WriteLine(String.Format("Hoje, dia {0:hh}, é aniversário das seguintes pessoas:", DateTime.Now));
+                Console.WriteLine(String.Format("Hoje, dia {0:dd/MM/yyyy}, é aniversário das seguintes pessoas:", DateTime.Now));
 
                 foreach (Pessoa p in listaPessoas)
                 {
@@ -301,7 +301,7 @@ namespace Funcoes
             }
             else
             {
-                Console.WriteLine(String.Format("Não tem ninguém que faz aniversário hoje, dia {0:hh}.", DateTime.Now));
+                Console.WriteLine(String.Format("Não tem ninguém que faz aniversário hoje, dia {0:dd/MM/yyyy}.", DateTime.Now));
             }
             Console.WriteLine();
             Console.WriteLine("Pressione qualquer tecla para continuar...");
