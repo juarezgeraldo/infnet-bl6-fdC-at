@@ -11,6 +11,16 @@ namespace Funcoes
         public List<Pessoa> pessoaList = new();
         private readonly Repositorio repositorio = new();
 
+        public Funcoes(List<Pessoa> pessoaList, Repositorio repositorio)
+        {
+            this.pessoaList = pessoaList;
+            this.repositorio = repositorio;
+        }
+
+        public Funcoes()
+        {
+        }
+
         public void CarregaPoessoaList(string arquivo)
         {
             pessoaList = repositorio.CarregaPessoasLista(arquivo);
@@ -247,7 +257,7 @@ namespace Funcoes
 
             return indices[opcao];
         }
-        public string? GetNomeArquivo()
+        public static string? GetNomeArquivo()
         {
             string? arquivo = null;
             if (Directory.Exists(@"c:\temp"))

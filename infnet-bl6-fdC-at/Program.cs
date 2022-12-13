@@ -12,7 +12,7 @@ namespace AplicacaoPrincipal
             int opcao = 0;
             Funcoes.Funcoes funcao = new();
 
-            string? arquivo = funcao.GetNomeArquivo();
+            string? arquivo = Funcoes.Funcoes.GetNomeArquivo();
             if (arquivo != null)
             {
                 funcao.CarregaPoessoaList(arquivo);
